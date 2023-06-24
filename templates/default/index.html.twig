@@ -1,0 +1,36 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}People List{% endblock %}
+
+{% block body %}
+
+    <h1>Add new person</h1>
+    {{ block('form', 'default/update.html.twig') }}
+
+    <h1>Existing people</h1>
+
+    <table border="1" cellpadding="5" cellspacing="0">
+        {% if people is not empty %}
+        <thead>
+            <tr>
+                <th>Person</th>
+                <th>Boss</th>
+                <th>Address</th>
+                <th>&nbsp;</th>
+            </tr>
+        </thead>
+        {% endif %}
+        {% for person in people %}
+            <tr>
+                <td><a href="{{ path('update', {person: person.id}) }}">{{ person.name }}</a></td>
+                <td>{{ person.boss }}</td>
+                <td>{{ person.address ?: 'No address set' }}</td>
+                <td><a href="{{ path('delete', {person: person.id}) }}">Delete</a></td>
+            </tr>
+        {% else %}
+            <tr>
+                <td colspan="4">No people yet.</td>
+            </tr>
+        {% endfor %}
+    </table>
+{% endblock %}
